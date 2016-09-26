@@ -1,0 +1,159 @@
+                    HUGI SIZE CODING COMPETITION #15
+
+Rules:  v1.09
+ Date:  September 28th, 2001
+
+Welcome to the Hugi Size Coding Compo #15!  This compo is an
+innovative task: you have to code a little program that performs
+various rotations, reflections and translations on the image.
+There are plenty of ways to do that, so this compo is about
+strategic optimization as well as tactical optimization.  In
+addition, this is not a particularly hard task and so is
+interesting for newbies as well.
+
+Changes in v.1.09:
+	- added the WIN2KFIX program to help testing under Win2K
+	
+Changes in v.1.08:
+	- fixed a bug in the example program (it was not supported to
+	have more than one space between file names)
+	- the test program passes five spaces between the two file names
+
+Changes in v.1.07:
+	- fixed an error in the description of the keys (3 and 9 were
+	swapped)
+
+Changes in v.1.06:
+	- specified the attributes of the created file
+	- the test program checks that the attributes are correct and
+	that the size of the generated file is 17462
+
+
+COMMAND LINE
+~~~~~~~~~~~~
+Your program must load the BMP file entered on the command line
+as the first parameter. The file name will be a standard 8.3 filename
+and will start in the normal position on the command line of 0082h.
+You may use FCB functions if you see fit.
+
+You may assume that there is at least a space (20h) char after the
+extension.
+
+The file will always be a grayscale (i.e. 256-color, the palette being
+0-0-0, 1-1-1, 2-2-2, etc.) 128x128 bitmap.  If you don't want to
+look up the BMP file format description, that means the file will have a
+1078-byte header, followed by the raw bytes.  Remember that BMP
+stores the image upside-down -- first the last line, then the penultimate,
+and so on until the first; each line has the leftmost pixel first and the
+rightmost pixel last.
+
+
+OBJECT
+~~~~~~
+Your entry will have to show the image (not upside-down of course)
+in mode 13h in the rectangle enclosed between (96, 36) included
+and (224, 164) excluded.  Everything outside the rectangle must
+be in color 0 (black).  The palette must be initialized like this:
+- four entries set to (0,0,0)
+- four entries set to (1,1,1)
+- four entries set to (2,2,2)
+...
+- the last four entries set to (63,63,63)
+
+After having displayed the image, the entry will have to wait for
+a key on stdin, read it without echo (or otherwise ensuring that
+everything outside the rectangle is black) and interpret it as
+follows:
+- a 1 will rotate the image clockwise by 180 degrees
+- a 3 will rotate the image clockwise by 90 degrees
+- a 7 will rotate the image counter-clockwise by 180 degrees
+- a 9 will rotate the image counter-clockwise by 90 degrees
+- a 5 will flip the image horizontally
+- a 0 will flip the image vertically
+- a 8 will scroll the image upwards (the topmost line reappears as the last)
+- a 2 will scroll the image downwards (the bottom line reappears as the
+first)
+- a 6 will scroll to the right (the rightmost column reappears on the left)
+- a 4 will scroll to the left (the leftmost column reappears on the right)
+- a spacebar quits the program.  More on this later.
+
+The algorithms to do so should be rather intuitive, if you are in
+doubt take a look at the example program.  I am not going to give
+formulas because they can vary depending on how you treat
+the fact that BMP files are upside down.
+
+Note that these are regular ASCII characters (48-57 + 32 for the
+spacebar), not cursor keys.  So using the numpad to operate the
+program will in principle work only if NumLock is on.
+
+After a transformation is performed, the image will have to be
+refreshed, following the same rules already set for the initial
+display.  Any key not listed here can have any effect, including
+performing arbitrary trasformations or crashing the computer.
+Formatting the hard disk will not be considered polite, and I
+doubt it could save you bytes.
+
+When the spacebar is pressed, the program must look for another
+filename on the command line and write a valid 128x128 BMP file
+to that file, containing the transformed image.  Again, I will not
+spend much time describing the format because you can treat
+the file header as standardized and store the image upside-down
+right after the header.  The file must not be assumed to be
+on disk and must be created with the archive attribute set (20h).
+
+The file name will be a standard 8.3 filename but is *not*
+guaranteed to start right after the first filename -- that is, more
+than one space might separate the two.  Again, you may use
+FCB functions if you see fit.
+
+You may assume that there is a CR (0dh) char after the extension.
+
+
+TEST PROGRAM
+~~~~~~~~~~~~
+The test program executes 20 sets of transformations and checks that
+the results matches the expected one as produced by the example
+program.
+
+Please note that passing the test program does not guarantee that your
+entry has followed all the rules. It's quite possible that a loop hole
+exists. Check the Hugi website (http://home.pages.de/~hugi-compo/) and
+the Yahoogroups Hugi-compo mailing list for updated test programs.
+
+Besides the rules described in this document, you must comply with the
+general rules that apply to all Hugi Size Coding Competitions. These are
+described in the file GENERAL.TXT.  In particular, it has emerged after
+discussions on the mailing list that "work on Adok's PC" implies that,
+after issuing INT 10H's mode set subfunction (AH = 0), AH is unchanged.
+
+If you are unsure about some detail then please post a question to the
+Hugi-compo mailing list (hugi-compo@yahoogroups.com).
+
+After the compo deadline a period of public judgment occurs during which
+you and others determine penalties for rule violations.
+
+
+SCHEDULE
+~~~~~~~~
+Sep 1, 2001                Compo starts
+Oct 15, 2001 11:59 pm CET  Deadline for entry submission
+Oct 16, 2001               Entries and beta results released
+                           Start of Public Judgment
+Oct 22, 2001 11:59 pm CET  End of Public Judgment
+Oct 23, 2001               Final results will released
+
+
+CREDITS
+~~~~~~~
+The rules for the compo are entirely TAD's creation.  I wrote these
+rules based on his example program and only to help him out.
+
+Since I pretty much stole some of this text from the previous compo,
+most of the thanks and credits go to the previous authors of this file.
+:-)
+
+Thanks,
+Bonz
+
+If you have any questions or comments, please feel free to post them
+to the hugi-compo mailing list, or flame me personally. :-)
