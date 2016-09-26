@@ -1,14 +1,11 @@
 ;
-; hugi 15 - bmp viewer/modifier
+; Hugi Size Coding Compo 15 - BMP viewer/modifier
+; October 2001
 ;
-; well i think my algorithm for transforming is pretty
-; reasonable now tho it could probably be done a bit
-; smaller. 
+; See H15RULES.TXT for a description of the competition rules
+; and how the program functions.
 ;
-; few hacks in here, im sure it can be organised
-; better to save a few more bytes.
-;
-; -- chamber <chamber@polonium.fsnet.co.uk>
+; Written in i586 assembly language
 ;
 ;--------------------------------------
 ;
