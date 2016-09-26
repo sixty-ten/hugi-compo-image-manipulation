@@ -1,5 +1,5 @@
 # hugi-compo-image-manipulation
-An image manipulation program written in assembly code in 170 bytes
+An image manipulation program written in assembly code (compiles to 170 bytes)
 
 Entered into the 15th Hugi Size Coding Compo (October 2001)
 
